@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>  
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TensorFlow.js Example</title>
+
+	<style>
+		.image-upload {
+			border: #999 2px dashed;
+			cursor: pointer;
+			text-align: center;
+			align-content: center;
+			height: 200px;
+			width: 400px;
+		}
+
+		.description {
+			text-align: center; 
+		}
+
+		.hide {
+			display: none;
+		}
+
+		/*https://stackoverflow.com/questions/47514692/bootstrap-4-list-items-that-have-d-flex-class-do-not-respond-to-hide*/
+		.d-flex[style*="display:none"], .d-flex[style*="display: none"] {
+			display:none !important;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="container mt-5" id="firstStep">
+
+		<nav class="navbar navbar-expand-lg bg-light">
+			<div class="container-fluid">
+				<!-- <a class="navbar-brand" href="#">Navbar</a> -->
+			  	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+				  <li class="nav-item">
+					<b><a class="nav-link" aria-current="page" href="#">Home</a></b>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="/about.html">Sobre</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		</nav>
+
+		<main>
+			<div class="mt-4">
+				<div class="description" id="mainDescription">
+					<h3>Column 1</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+					<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+				</div>
+
+				<div class="d-flex justify-content-center">
+					
+					<div id="loadingModel" class="">
+						<span id="loadingDescription">Carregando...</span>
+						<div class="text-center">
+							<div class="spinner-border ms-auto m-2" role="status" aria-hidden="true"></div>
+						</div>
+					</div>
+					
+					<div class="image-upload hide" id="uploadArea">
+						<img class="mb-2" src="/assets/upload-image-icon.svg" width="50px" height="50px">
+						<h5><b>Fazer upload da imagem</b></h5>
+						<input hidden="hidden" type="file" id="fileInput" accept="image/*">
+					</div>
+				</div>
+
+				<!-- <div class="d-flex justify-content-center" id="imageArea">
+					<img id="previewImage" class="img-fluid" src="#" style="display:none" alt="">
+				</div> -->
+			</div>
+
+			<div class="container hide" id="predictionResult">
+				<div class="row">
+				  <div class="col-sm">
+					<img class="img-fluid mb-2 rounded mx-auto d-block" src="#" id="resultImage" alt="">
+				  </div>
+				<div class="col-sm d-flex justify-content-center">
+
+					<div class="hide" id="monilia">
+						<div class="text-center">
+							<span id="diseaseTitle">
+								<h3><B>Monilíase</B></h3>
+							</span>
+						</div>
+
+						<div class="accordion mt-3">
+							<div class="accordion-item">
+							<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+								<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+								Descrição
+								</button>
+							</h2>
+							<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+								<div class="accordion-body">
+									A Monilíase é uma doença causada pelo fungo Moniliopthora roreri, praga quarentenária ausente em
+									nosso país, ainda mais agressiva que a vassoura-de-bruxa, e que ataca só os frutos do cacaueiro
+									e de outras espécies de Theobroma, como o Cupuaçuzeiro, e espécies de Herrania.
+								</div>
+							</div>
+							</div>
+							<div class="accordion-item">
+							<h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+								Como doença é transmitida?
+								</button>
+							</h2>
+							<div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+								<div class="accordion-body">
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">Transporte e plantio de material vegetal infestado (ex. mudas, frutos e sementes);</li>
+										<li class="list-group-item">Sacarias, equipamentos, roupas e calçados utilizados em plantações de cacaueiros onde a
+											doença ocorre.</li>
+									</ul>
+								</div>
+							</div>
+							</div>
+							<div class="accordion-item">
+							<h2 class="accordion-header" id="panelsStayOpen-headingThree">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+								Como prevenir?
+								</button>
+							</h2>
+							<div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+								<div class="accordion-body">
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">Utilize apenas um ponto de acesso à propriedade para monitorar movimentos e visitantes.</li>
+										<li class="list-group-item">Direcione visitantes para uma área de estacionamento designada, com sinalização e registro de informações profissionais e de origem.</li>
+										<li class="list-group-item">Exija que visitantes limpem veículos, equipamentos e vestuário de pragas, sementes e material vegetal antes da entrada.</li>
+										<li class="list-group-item">Realize higiene pessoal e troca de vestuário antes e após acessar áreas, utilizando sacos plásticos para roupas tratadas com álcool 70% ou hipoclorito de sódio 2,5%.</li>
+										<li class="list-group-item">Negue acesso a quem se recusar a limpar veículos ou equipamentos.</li>
+										<li class="list-group-item">Assegure que funcionários desinfetem equipamentos usados nas visitas.</li>
+										<li class="list-group-item">Treine sua equipe para reconhecer sintomas da Monilíase e estar ciente da IN n°112/2020.</li>
+										<li class="list-group-item">Em caso de dúvidas ou resistência às normas, contate o órgão de fiscalização agropecuária local.</li>
+									</ul>
+									<p>Para mais informações, clique aqui</p>							
+								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="hide" id="black pod rot">
+						<div class="text-center">
+							<span id="diseaseTitle">
+								<h3><B>Podrião Parda</B></h3>
+							</span>
+						</div>
+						<div class="accordion mt-3">
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+								<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+									Descrição
+								</button>
+								</h2>
+								<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+									<div class="accordion-body">
+										<p>A podrião parda é considerada a mais
+										antiga doença conhecida do cacau. Existe em todas as
+										regiões de cultivo de cacau do mundo (cosmopolita). Estima-
+										se que as perdas anuais causadas por esta doença sejam
+										de aproximadamente 34%, tendo sido registradas perdas de
+										até 80% na Bahia.</p>
+
+										citar a fonte
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+									Como doença é transmitida?
+								</button>
+								</h2>
+								<div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+								<div class="accordion-body">
+									<ul class="list-group list-group-flush">
+										<p>O fungo Monilinia laxa hiberna em folhas secas ou frutos mumificados presos às árvores, onde seus esporos são disseminados pelo vento, água ou insetos. 
+										A contaminação é favorecida por ferimentos nos frutos (de pássaros ou insetos) ou pelo contato entre partes saudáveis e infectadas. 
+										A alta umidade, chuva ou orvalho, e temperaturas moderadas (15°C a 25°C) durante o florescimento favorecem o processo de contaminação.
+										</p>
+									</ul>
+								</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="panelsStayOpen-headingThree">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+									Como prevenir?
+								</button>
+								</h2>
+								<div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+									<div class="accordion-body">
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item">Remoções de frutos doentes</li>
+											<li class="list-group-item">Colheitas mais frequentes</li>
+											<li class="list-group-item">Retirada dos frutos na plantação com aplicação de um fungicida à base de cobre</li>
+											<li class="list-group-item">Redução do sombreamento nos lugares em que ele for mais denso.</li>
+										</ul>
+										<p></p>
+										<p>Para mais informações, clique aqui</p>							
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="d-flex align-items-center hide" id="healthy">
+						<span class="text-center"><h4>O cacau aparenta estar saudável</h4></span>
+					</div>
+
+				</div>
+			</div>
+		</main>
+
+		<div class="container mt-3 d-flex justify-content-center" id="button">
+			<input class="btn btn-primary" hidden="hidden" onclick="showUploadArea()" type="button" value="Analisar outra imagem" id="restart">
+		</div>
+
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<script src="index.js"></script>
+
+</body>
+</html>
