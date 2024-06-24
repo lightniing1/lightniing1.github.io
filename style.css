@@ -1,0 +1,21 @@
+.image-upload {
+    border: #999 2px dashed;
+    cursor: pointer;
+    text-align: center;
+    align-content: center;
+    height: 200px;
+    width: 400px;
+}
+
+.description {
+    text-align: center; 
+}
+
+.hide {
+    display: none;
+}
+
+/*https://stackoverflow.com/questions/47514692/bootstrap-4-list-items-that-have-d-flex-class-do-not-respond-to-hide*/
+.d-flex[style*="display:none"], .d-flex[style*="display: none"] {
+    display:none !important;
+}
