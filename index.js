@@ -23,7 +23,6 @@ window.onload = async function() {
 
 function showUploadArea() {    
     showElementById('uploadArea')
-    //hideElementById('previewImage')
     resetResultTypes()
     hideResultPredictionArea()
     showMainDescription()
@@ -32,7 +31,6 @@ function showUploadArea() {
 
 function hideUploadArea() {
     hideElementById('uploadArea')
-    //showElementById('previewImage')
 }
 
 function hideResultPredictionArea() {
@@ -96,6 +94,16 @@ document.getElementById('uploadArea').addEventListener('click', function() {
     document.getElementById('fileInput').click();
 });
 
+function showHome() {
+    hideElementById('about');
+    showElementById('home');
+}
+
+function showAbout() {
+    hideElementById('home');
+    showElementById('about')
+}
+
 //When the image is inserted, try to classify it
 document.getElementById('fileInput').addEventListener('change', classifyImage);
 
@@ -103,6 +111,7 @@ async function classifyImage() {
 
     const fileInput = document.getElementById('fileInput');
     const resultImage = document.getElementById('resultImage'); 
+    const loadingDescription = document.getElementById('loadingDescription')
 
     const file = fileInput.files[0];
 
@@ -118,10 +127,10 @@ async function classifyImage() {
     };
     
     img.onload = async function() {        
-        // Set the src of resultImage and display it
         resultImage.src = img.src;
         resultImage.style.display = 'block';
 
+        loadingDescription.textContent = 'Analisando...'
         hideUploadArea();
         showLoadingScreen();
 
