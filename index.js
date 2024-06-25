@@ -6,7 +6,6 @@ window.onload = async function() {
     showLoadingScreen()
     
     worker.postMessage({type: "init", modelPath: "assets/tfjs_graph_8/model.json"})
-    //await loadModel("assets/tfjs_graph_8/model.json")
 
     worker.onmessage = (e) => {
         const result = e.data;

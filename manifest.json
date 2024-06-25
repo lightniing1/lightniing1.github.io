@@ -1,0 +1,21 @@
+{
+    "name": "CacauIdentifica",
+    "short_name": "CacauIdentifica",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#fdfdfd",
+    "theme_color": "#9d6f4e",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "assets/icon192.webp",
+            "type": "image/webp",
+            "sizes": "192x192"
+        },
+        {
+            "src": "assets/icon512.webp",
+            "type": "image/webp",
+            "sizes": "512x512"
+        }
+    ]
+}
